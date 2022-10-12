@@ -9,38 +9,24 @@ public class App
     public static void main( String[] args ) throws Exception
     {
         Socket s = new Socket("localhost", 3000);
-        PrintWriter pr = new PrintWriter(s.getOutputStream());
+        
+        // per parlare
+        PrintWriter pr = new PrintWriter(s.getOutputStream(), true);
+        
+        // per ascoltare
+        BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
 
+        // per la tastiera
         BufferedReader tastiera = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Inserisci il messaggio:");
-        String stringaUtente = tastiera.readLine();
-        
-        pr.println(stringaUtente);
-        pr.flush();
 
-        //altezza
-        BufferedReader tas2 = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Inserisci l'altezza:");
-        String altezza = tas2.readLine();
+        pr.println("Eccomi");
+        System.out.println(br.readLine()); // rivevo: benvenuti dammi il tuo peso
+        pr.println(tastiera.readLine()); // leggo da tastiera il peso e lo invio
+        System.out.println(br.readLine()); // ricevo: dammi l'altezza
+        pr.println(tastiera.readLine()); // leggo d a tastiera l'altezza e la invio
+        System.out.println(br.readLine()); //rivevo il BMI 
+        pr.println("Grazie e ciao");
         
-        pr.println(altezza);
-        pr.flush();
-
-        //peso
-        BufferedReader tas3 = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Inserisci il peso:");
-        String peso= tas3.readLine();
-        
-        pr.println(peso);
-        pr.flush();
-
-        //chiusura
-        InputStreamReader in = new InputStreamReader(s.getInputStream());
-        BufferedReader br = new BufferedReader(in);
-        String str = br.readLine();
-        System.out.println("Server: " + str);
         s.close();
-
-
     }
 }
